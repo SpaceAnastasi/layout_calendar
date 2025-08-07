@@ -23,12 +23,9 @@
     align-items: center;
     text-align: center;
 
-    transition:
-      transform 300ms ease,
-      background-color 300ms ease;
+    transition: all 0.5s ease;
 
     &::before {
-      position: absolute;
       font-size: 30px;
     }
 
@@ -41,14 +38,12 @@
   }
 }
 
-/* === цифри 1–31 === */
 @for $i from 1 through 31 {
   .calendar__day:nth-child(#{$i})::before {
     content: '#{$i}';
   }
 }
 
-/* === зсув першого дня (mon = 0 … sun = 6) === */
 @each $day, $index in $weekdays {
   .calendar--start-day-#{$day} {
     .calendar__day:nth-child(1) {
@@ -57,10 +52,8 @@
   }
 }
 
-/* === довжина місяця 28-30 === */
-@for $len from 28 through 30 {
+@for $len from 28 through 31 {
   .calendar--month-length-#{$len} {
-    // із ($len+1)-го і далі — прибираємо
     .calendar__day:nth-child(n + #{$len + 1}) {
       display: none;
     }
