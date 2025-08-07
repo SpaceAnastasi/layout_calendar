@@ -11,7 +11,7 @@
     margin: auto;
   }
 
-  &__cell {
+  &__day {
     height: $cell-size;
     width: $cell-size;
     background-color: #eee;
@@ -23,6 +23,10 @@
     align-items: center;
     text-align: center;
 
+    transition:
+      transform 300ms ease,
+      background-color 300ms ease;
+
     &::before {
       position: absolute;
       font-size: 30px;
@@ -32,14 +36,14 @@
       cursor: pointer;
       background-color: #ffbfcb;
       transform: translateY(-20px);
-      transition-duration: 500ms;
+      z-index: 2;
     }
   }
 }
 
 /* === цифри 1–31 === */
 @for $i from 1 through 31 {
-  .calendar__cell:nth-child(#{$i})::before {
+  .calendar__day:nth-child(#{$i})::before {
     content: '#{$i}';
   }
 }
@@ -47,17 +51,18 @@
 /* === зсув першого дня (mon = 0 … sun = 6) === */
 @each $day, $index in $weekdays {
   .calendar--start-day-#{$day} {
-    .calendar__cell:nth-child(1) {
+    .calendar__day:nth-child(1) {
       margin-left: #{($cell-size + $cell-gap) * $index};
     }
   }
 }
 
-// === довжина місяця 29 ===
-// @for $len from 28 through 30 {
-//   .calendar--month-length-#{$len} {
-//     .calendar__cell:nth-child(n + #{$len + 1}) {
-//       display: none;
-//     }
-//   }
-// }
+/* === довжина місяця 28-30 === */
+@for $len from 28 through 30 {
+  .calendar--month-length-#{$len} {
+    // із ($len+1)-го і далі — прибираємо
+    .calendar__day:nth-child(n + #{$len + 1}) {
+      display: none;
+    }
+  }
+}
